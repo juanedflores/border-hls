@@ -19,6 +19,7 @@ let processor = {
     this.video.addEventListener(
       'playing',
       function () {
+        console.log(self);
         self.width = self.video.videoWidth;
         self.height = self.video.videoHeight;
         self.timerCallback();
@@ -29,20 +30,35 @@ let processor = {
   },
 
   computeFrame: function () {
+    let c1 = document.getElementById('c1').getContext('2d');
+    var canvas_width = c1.canvas.clientWidth;
+    // 1236
+    console.log('calc: ' + (this.height / 5) * 4);
     this.ctx1.drawImage(
       this.video,
       0,
-      0,
-      this.width * 3,
-      this.height * 3,
-      0,
-      0,
+      (this.height / 5) * 4,
       this.width,
-      this.height
+      this.height,
+      0,
+      0,
+      this.height / 5,
+      canvas_width
     );
     return;
   },
 };
+
+window.addEventListener(
+  'resize',
+  function (event) {
+    let c1 = document.getElementById('c1').getContext('2d');
+    var canvas_width = c1.canvas.clientWidth;
+    var canvas_height = c1.canvas.clientHeight;
+    console.log(canvas_width, canvas_height);
+  },
+  true
+);
 
 document.addEventListener('DOMContentLoaded', () => {
   processor.doLoad();
